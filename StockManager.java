@@ -4,8 +4,8 @@ import java.util.ArrayList;
  * Manage the stock in a business.
  * The stock is described by zero or more Products.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Akash Darji) 
+ * @version (0.0.1)
  */
 public class StockManager
 {
@@ -26,8 +26,27 @@ public class StockManager
      */
     public void addProduct(Product item)
     {
-        stock.add(item);
-    }
+        
+       boolean match;
+       Product testing = item;
+       for(Product checking : stock){
+           // getting an error
+           if(testing.getID() = checking.getID()) {
+               match = true;
+           }//end of if
+           else {
+               match = false;
+           }//end of else
+       }// end of for
+      
+       if(match = false) {
+           stock.add(item);
+       }// end of if 
+       else {
+           System.out.println("Sorry, the product ID you entered already exists. Please enter a new one.");
+       }// end of else
+
+    }// end of public void addProduct
     
     /**
      * Receive a delivery of a particular product.
@@ -37,7 +56,15 @@ public class StockManager
      */
     public void delivery(int id, int amount)
     {
-    }
+        
+       if(findProduct(id) != null) {
+           findProduct(id).increaseQuantity(amount);
+       }// end of if
+       else {
+           System.out.println("That item ID cannot be found.");
+       }// end of else 
+
+    }// end of public void delivery
     
     /**
      * Try to find a product in the stock with the given id.
@@ -46,8 +73,15 @@ public class StockManager
      */
     public Product findProduct(int id)
     {
+        
+       for(Product checking : stock) {
+           if(checking.getID() == id) {
+               return checking;
+           }// end of if
+       }// end of for
+
         return null;
-    }
+    }// end of public Product findProduct
     
     /**
      * Locate a product with the given ID, and return how
@@ -58,13 +92,24 @@ public class StockManager
      */
     public int numberInStock(int id)
     {
+        
+       if(findProduct(id) != null) {
+           return findProduct(id).getQuantity();
+       }// end of if
+       else {
         return 0;
-    }
+    }// end of else
+    } //end of public int numberInStock
 
     /**
      * Print details of all the products.
      */
     public void printProductDetails()
     {
-    }
-}
+        
+       for(Product detail : stock) {
+           System.out.println(detail.toString());
+       }// end of for
+
+    }// end of public void printProductDetail
+}// end of public class StockManager
